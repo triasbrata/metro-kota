@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
@@ -54,10 +54,10 @@ jobs:
       run:
         shell: bash
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - if: matrix.channel == 'android'
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: '17'
@@ -118,7 +118,7 @@ jobs:
           # frameworks): a tar keeps them.
           tar -cf build.tar -C dist .
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: itch-${{ matrix.channel }}
           path: build.tar
@@ -132,14 +132,14 @@ jobs:
       BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
       ITCH_GAME: ${{ vars.ITCH_GAME }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Check the itch.io settings
         run: |
           [ -n "$BUTLER_API_KEY" ] || { echo "::error::The secret BUTLER_API_KEY is not set"; exit 1; }
           [ -n "$ITCH_GAME" ] || { echo "::error::The variable ITCH_GAME (user/game) is not set"; exit 1; }
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           path: builds
 
